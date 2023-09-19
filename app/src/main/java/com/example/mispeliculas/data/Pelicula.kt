@@ -1,9 +1,12 @@
 package com.example.mispeliculas.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.lang.StringBuilder
 
+@Entity(primaryKeys = arrayOf("titulo", "descripcion"))
 data class Pelicula(
     @SerializedName("title") val titulo: String,
     @SerializedName("poster_path") val posterPath: String?,
