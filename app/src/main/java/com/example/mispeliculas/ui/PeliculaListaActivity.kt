@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.mispeliculas.R
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.mispeliculas.data.Pelicula
 
 class PeliculaListaActivity : AppCompatActivity() {
@@ -26,11 +27,15 @@ class PeliculaListaActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-        setupRecyclerView(findViewById(R.id.item_list))
+        val peliculasObserver = Observer<List<Pelicula>> { peliculas ->
+            setupRecyclerView(findViewById(R.id.item_list), peliculas)
+        }
+
+        viewModel.peliculas.observe(this, peliculasObserver)
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.adapter = SimpleFilmRecyclerViewAdapter(this, viewModel.peliculas)
+    private fun setupRecyclerView(recyclerView: RecyclerView, peliculas: List<Pelicula>) {
+        recyclerView.adapter = SimpleFilmRecyclerViewAdapter(this, peliculas)
     }
 
     class SimpleFilmRecyclerViewAdapter(private val parentActivity: PeliculaListaActivity,
